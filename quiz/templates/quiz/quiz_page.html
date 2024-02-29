@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アドビ認定プロフェッショナル Photoshop 模擬テストB</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/styles.css' %}">
+</head>
+<body>
+
+<h1>アドビ認定プロフェッショナル Photoshop 模擬テストB</h1>
+<h3>問{{ question.id }}: {{ question.question_text }}</h3>
+
+{% if question.question_image %}
+    <div class="image-and-choices">
+        <img src="{{ question.question_image.url }}" alt="Question Image">
+    </div>
+{% endif %}
+
+<form action="{% url 'quiz_page' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in choices %}
+        <div class="choice-item">
+            <input type="checkbox" name="choices" value="{{ choice.id }}"> {{ forloop.counter }}. {{ choice.choice_text }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="決定" class="button-decision">
+</form>
+
+{% if user_answers %}
+    {% if feedback %}
+        <p class="{% if feedback == '正解◎' %}correct-answer{% else %}incorrect-answer{% endif %}">{{ feedback }}</p>
+    {% endif %}
+    <p>あなたの解答: {% for answer in user_answers %}{{ answer.choice_text }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    {% if question.explanation %}
+        <p>正解番号: {{ question.correct_number }}</p>
+    {% endif %}
+    {% if question.explanation %}
+        <p>解説: {{ question.explanation }}</p>
+    {% endif %}
+{% endif %}
+
+<p>正解数: {{ correct_count }} / {{ total_questions }}</p>
+<p>正解率: {{ accuracy }}%</p>
+
+{% if question.id > 1 %}
+    <a href="{% url 'quiz_page' question.id|add:'-1' %}" class="button-next">戻る</a>
+{% endif %}
+
+{% if next_question %}
+    <a href="{% url 'quiz_page' next_question.id %}" class="button-next">次へ</a>
+{% else %}
+    <a href="{% url 'title_page' %}" class="button-return-title">タイトル画面に戻る</a>
+{% endif %}
+
+</body>
+</html>

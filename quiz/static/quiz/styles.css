@@ -1,0 +1,40 @@
+.image-and-choices img {
+    margin-bottom: 20px;
+}
+
+.choice-item {
+    margin-bottom: 10px; 
+}
+
+.correct-answer {
+    color: red;
+}
+
+.incorrect-answer {
+    color: blue;
+}
+
+.user-answer {
+    color: black;
+}
+
+.button-decision {
+    background-color: blue;
+    color: white;
+    padding: 5px 30px;
+    margin: 10px 0; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.button-decision:hover {
+    background-color: blue;
+}
+
+.button-next {
+    margin-right: 50px;
+}
+
+
