@@ -29,10 +29,6 @@
     font-size: 18px;
 }
 
-.button-decision:hover {
-    background-color: blue;
-}
-
 .button-next {
     margin-right: 50px;
 }
